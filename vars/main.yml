@@ -1,0 +1,3 @@
+---
+# vars file for ansible-role-serf
+SERF_VERSION: '0.8.2'  # check https://releases.hashicorp.com/serf/

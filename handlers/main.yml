@@ -1,0 +1,6 @@
+---
+# handlers file for ansible-role-serf
+- name: restart serf service
+  service:
+    name: serf
+    state: restarted

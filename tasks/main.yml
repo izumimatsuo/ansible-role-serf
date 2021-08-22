@@ -1,0 +1,51 @@
+---
+# tasks file for ansible-role-serf
+- name: install unzip for unarchive module
+  yum:
+    name: unzip
+
+- name: detect serf is installed
+  stat:
+    path: /usr/local/bin/serf
+  register: serf_bin
+
+- block:
+  - name: download serf {{ SERF_VERSION }}
+    unarchive:
+      src: https://releases.hashicorp.com/serf/{{ SERF_VERSION }}/serf_{{ SERF_VERSION }}_linux_amd64.zip
+      dest: /tmp
+      remote_src: yes
+      owner: root
+      group: root
+      mode: '0755'
+
+  - name: install serf
+    command: mv /tmp/serf /usr/local/bin/serf
+
+  when: not serf_bin.stat.exists
+
+- name: create serf conf directory
+  file:
+    path: /etc/serf/config.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: copy serf service file
+  template:
+    src: serf.service.j2
+    dest: /etc/systemd/system/serf.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart serf service
+
+- name: daemon-reload
+  systemd: daemon_reload=yes
+
+- name: start serf service
+  service:
+    name: serf
+    state: started
+    enabled: yes

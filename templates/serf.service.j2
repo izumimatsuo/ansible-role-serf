@@ -1,0 +1,14 @@
+[Unit]
+Description=Serf agent
+equires=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/serf agent -bind {{ ansible_host }}{% if serf_join_hostnames != None %}{% for host in serf_join_hostnames %}{{ ' -retry-join '+hostvars[host].ansible_host if inventory_hostname != host }}{% endfor %}{% endif %} -syslog -config-dir /etc/serf/config.d
+User=nobody
+Group=nobody
+
+[Install]
+WantedBy=multi-user.target
