@@ -1,0 +1,17 @@
+{
+{% if serf_role_name %}
+  "tags": {
+    "role": "{{ serf_role_name }}"
+{{ '  },' if serf_join_hosts or serf_event_handlers else '  }' }}
+{% endif %}
+{% if serf_join_hosts %}
+  "start_join": [
+{% for host in serf_join_hosts %}{{ '    "'+hostvars[host].ansible_host+'"' if hostvars[host] is defined else host }}{{ ',\n' if loop.index < serf_join_hosts | length else '\n' }}{% endfor %}
+{{ '  ],' if serf_event_handlers else '  ]' }}
+{% endif %}
+{% if serf_event_handlers %}
+  "event_handlers": [
+{% for event in serf_event_handlers %}{{ '    "'+event+'"' }}{{ ',\n' if loop.index < serf_event_handlers | length else '\n' }}{% endfor %}
+  ]
+{% endif %}
+}
