@@ -32,6 +32,16 @@
     group: root
     mode: '0755'
 
+- name: copy serf config file
+  template:
+    src: node.json.j2
+    dest: /etc/serf/config.d/node.json
+    owner: root
+    group: root
+    mode: '0755'
+  notify: restart serf service
+  when: serf_join_hosts or serf_role_name or serf_event_handlers
+
 - name: copy serf service file
   template:
     src: serf.service.j2
