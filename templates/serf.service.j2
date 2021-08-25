@@ -1,12 +1,13 @@
 [Unit]
 Description=Serf agent
-equires=network-online.target
+Requires=network-online.target
 After=network-online.target
 
 [Service]
 Type=simple
-Restart=always
 ExecStart=/usr/local/bin/serf agent -bind {{ serf_bind_host }} -syslog -config-dir /etc/serf/config.d
+KillSignal=SIGINT
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
