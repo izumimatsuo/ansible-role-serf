@@ -1,4 +1,4 @@
-# ansible-role-serf
+# ansible-role-serf [![Build Status](https://app.travis-ci.com/izumimatsuo/ansible-role-serf.svg?branch=main)](https://app.travis-ci.com/izumimatsuo/ansible-role-serf)
 
 CentOS 7 に serf を導入する ansible role です。
 
