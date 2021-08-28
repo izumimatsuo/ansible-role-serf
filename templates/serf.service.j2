@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/serf agent -bind {{ serf_bind_host }} -syslog -config-dir /etc/serf/config.d
+ExecStart=/usr/local/bin/serf agent -bind {{ serf_bind_host }}:{{ serf_bind_port }} -syslog -config-dir /etc/serf/config.d
 KillSignal=SIGINT
 Restart=always
 
