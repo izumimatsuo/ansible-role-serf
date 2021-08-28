@@ -1,6 +1,7 @@
 ---
 # defaults file for ansible-role-serf
 serf_bind_host: "{{ ansible_host }}"
+serf_bind_port: 87946
 serf_join_hosts:
 serf_role_name:
 serf_event_handlers:
